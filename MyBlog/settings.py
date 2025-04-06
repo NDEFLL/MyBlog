@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-a726d^tv8b4qptsskmfg%b#sl2l*@dw36b+a%3p2n%!cy0bin2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# 允许 Vercel 的域名
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1']
 
 
 # Application definition

@@ -14,3 +14,6 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MyBlog.settings')
 
 application = get_wsgi_application()
+
+# 添加以下代码以支持 Vercel 的无服务器函数
+app = application
