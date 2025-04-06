@@ -27,10 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a726d^tv8b4qptsskmfg%b#sl2l*@dw36b+a%3p2n%!cy0bin2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 生产环境必须关闭 DEBUG
+DEBUG = False
 
 # 允许 Vercel 的域名
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1','localhost']
 
 
 # Application definition
