@@ -13,7 +13,11 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/staticfiles/$1",
+      "headers": {
+        "Cache-Control": "no-cache", // 临时禁用缓存
+        "Content-Type": "text/css"   // 强制MIME类型
+      }
     },
     {
       "src": "/(.*)",
