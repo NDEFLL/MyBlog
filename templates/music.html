@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Music</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/music.css">
+</head>
+<body>
+    <div class="music">
+        <h2 style="text-align: center">热门歌单 Top 5</h2>
+        {% load static %}
+        {% for item in top5 %}
+        <div class="playlist-card">
+            <!-- 显示图片 -->
+            <img src="{{ item.image_url }}" alt="{{ item.title }}" class="playlist-img">
+            
+            <!-- 显示歌单信息 -->
+            <div class="playlist-info">
+                <p>{{ item.title }}</p>
+                <!--<p>标签1：{{ item.tag1}}  标签2：{{ item.tag2 }}  标签3：{{ item.tag3}}</p>-->
+                <p>热度指数: {{ item.hot_score_norm|floatformat:2 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

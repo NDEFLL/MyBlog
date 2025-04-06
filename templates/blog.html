@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/style.css">
+    <link rel="shortcut icon" href="../static/img/icon1.png" type="image/x-icon">
+    <!-- 引入特殊字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="avatar-container">
+                <img src="../static/img/touxiang.jpg" class="avatar" alt="头像"> 
+                <p class="nickname">Ndefl</p>
+            </div>
+            <div class="tagline">
+                <p>" <i>Hello World!</i> "<br><br>前方到站上海虹桥</p>
+            </div>
+            
+            <!-- 音乐播放器 -->
+            <div class="music-player-container">
+                <div class="player-controls">
+                    <div class="song-info">
+                        <h4 id="song-title">虹桥</h4>
+                        <p id="song-artist">Rapeter</p>
+                    </div>
+                    <div class="control-buttons">
+                        <button id="prev-btn"><i class="fas fa-backward"></i></button>
+                        <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                        <button id="next-btn"><i class="fas fa-forward"></i></button>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <span id="current-time">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                    <div class="volume-control">
+                        <i class="fas fa-volume-down"></i>
+                        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                </div>
+            </div>
+            <audio id="music" autoplay>
+                    <source src="../static/虹桥.mp3" type="audio/mpeg">
+            </audio>
+            
+            <ul class="social-icons">
+                <li><a href="#"><i class="fab fa-qq"></i></a></li>
+                <li><a href="#"><i class="fab fa-weixin"></i></a></li>
+                <li><a href="#"><i class="fab fa-telegram"></i></a></li>
+                <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            </ul>
+        </div>
+        
+        <!--右边部分-->
+        <div class="right-section">
+            <div class="horizontal-group">
+                <!--时间、天气-->
+                <div class="time">
+                    <p id="date"></p>
+                    <p id="clock"></p>
+                    <p id="weather"></p>
+                </div>
+                
+                <div class="quote">
+                    <p>「击石原有火，不击乃无烟。<br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 人学始知道，不学亦枉然。」</p>
+                </div>
+            </div>
+            
+            <!--网站链接-->
+            <div class="website-list">
+                <a href="https://blog.csdn.net/m0_68533987?type=blog" target="_blank">
+                    <div class="website-item">
+                        <i class="fa-solid fa-blog"></i>
+                        <p>博客</p>
+                    </div>
+                </a>
+                <a href="https://github.com/NDEFLL/Ndefl" target="_blank">
+                    <div class="website-item">
+                        <i class="fa-brands fa-github"></i>
+                        <p>GitHub</p>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="website-item">
+                        <i class="fas fa-home"></i>
+                        <p>起始页</p>
+                    </div>
+                </a>
+                <a href="projshow.html" target="_blank">
+                    <div class="website-item">
+                        <i class="fas fa-bookmark"></i>
+                        <p>我的项目</p>
+                    </div>
+                </a>
+                <div class="website-item">
+                    <i class="fas fa-flask"></i>
+                    <p>开发中...</p>
+                </div>
+                <a href="music" target="_blank" rel="noopener noreferrer">
+                    <div class="website-item">
+                        <i class="fas fa-flask"></i>
+                        <p>敬请期待...</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+        // 更新时钟
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const dateElement = document.getElementById('date');
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()];
+
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
+            dateElement.textContent = `${year} 年 ${month} 月 ${day} 日 ${weekday}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+        
+        // 获取天气信息
+        // 在现有的<script>标签内添加以下代码
+        function getWeather() {
+            const weatherElement = document.getElementById('weather');
+            if (!weatherElement) return;
+            
+            // 配置参数
+            const location = '101280101'; // 广州的城市代码（可在和风天气官网查询其他城市）
+            const apiKey = 'cd810fb2a3ba4a438bdca6dc07d55584'; // 替换为你的实际API密钥
+            
+            // 获取实时天气
+            fetch(`https://devapi.qweather.com/v7/weather/now?location=${location}&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === '200') {
+                        const weather = data.now.text;          // 天气状况
+                        const temp = data.now.temp;            // 温度
+                        const humidity = data.now.humidity;    // 湿度
+                        
+                        // 显示格式：广东 多云 9℃
+                        weatherElement.textContent = `广东 ${weather} ${temp}℃`;
+                        
+                        // 可选：添加天气图标
+                        // weatherElement.innerHTML = `<i class="weather-icon ${getWeatherIconClass(weather)}"></i> 广东 ${weather} ${temp}℃`;
+                    } else {
+                        weatherElement.textContent = '获取天气失败';
+                    }
+                })
+                .catch(error => {
+                    console.error('获取天气出错:', error);
+                    weatherElement.textContent = '天气服务暂不可用';
+                });
+        }
+        
+        // 页面加载时获取天气
+        document.addEventListener('DOMContentLoaded', function() {
+            getWeather();
+            // 每1小时更新一次天气
+            setInterval(getWeather, 3600000);
+        });
+        
+        const audio = document.getElementById('music');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progress = document.getElementById('progress');
+        const progressBar = document.getElementById('progress-bar');
+        const songTitle = document.getElementById('song-title');
+        const songArtist = document.getElementById('song-artist');
+        const currentTimeSpan = document.getElementById('current-time');
+        const durationSpan = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volume-slider');
+        
+        // 初始化歌曲信息
+        songTitle.textContent = '虹桥';
+        songArtist.textContent = 'Rapeter';
+        
+        // 播放/暂停功能
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+        
+        // 进度条更新
+        audio.addEventListener('timeupdate', () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progress.style.width = `${percent}%`;
+        
+            const currentMinutes = Math.floor(audio.currentTime / 60);
+            const currentSeconds = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+            currentTimeSpan.textContent = `${currentMinutes}:${currentSeconds}`;
+        
+            if (audio.duration) {
+                const durationMinutes = Math.floor(audio.duration / 60);
+                const durationSeconds = Math.floor(audio.duration % 60).toString().padStart(2, '0');
+                durationSpan.textContent = `${durationMinutes}:${durationSeconds}`;
+            }
+        });
+        
+        // 点击进度条跳转
+        progressBar.addEventListener('click', (e) => {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / width) * duration;
+        });
+        
+        // 音量控制
+        volumeSlider.addEventListener('input', () => {
+            audio.volume = volumeSlider.value;
+        });
+        
+        // 简单模拟上一曲和下一曲（这里可根据实际情况扩展）
+        prevBtn.addEventListener('click', () => {
+            console.log('上一曲');
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            console.log('下一曲');
+        });    
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</body>
+
+</html>
