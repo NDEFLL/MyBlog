@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
+      "src": "manage.py",
+      "use": "@vercel/python",
+      "config": {
+        "cmd": "python manage.py collectstatic --noinput"
+      }
+    },
+    {
       "src": "MyBlog/wsgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
         "runtime": "python3.10"
-      }
-    },
-    {
-      "src": "manage.py",
-      "use": "@vercel/python",
-      "config": {
-        "cmd": "python manage.py collectstatic --noinput"
       }
     }
   ],
