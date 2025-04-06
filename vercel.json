@@ -8,16 +8,19 @@
         "maxLambdaSize": "15mb",
         "runtime": "python3.10"
       }
+    },
+    {
+      "src": "manage.py",
+      "use": "@vercel/python",
+      "config": {
+        "cmd": "python manage.py collectstatic --noinput"
+      }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1",
-      "headers": {
-        "Cache-Control": "no-cache", 
-        "Content-Type": "text/css"   
-      }
+      "dest": "/staticfiles/$1"
     },
     {
       "src": "/(.*)",
