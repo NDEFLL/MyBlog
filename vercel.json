@@ -2,13 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "manage.py",
-      "use": "@vercel/python",
-      "config": {
-        "cmd": "python manage.py collectstatic --noinput"
-      }
-    },
-    {
       "src": "MyBlog/wsgi.py",
       "use": "@vercel/python",
       "config": {
