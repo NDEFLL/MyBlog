@@ -5,7 +5,7 @@
       "src": "manage.py",
       "use": "@vercel/python",
       "config": {
-        "cmd": "python manage.py collectstatic --noinput"
+        "cmd": "python manage.py collectstatic --noinput && cp -r public/static/* public/"
       }
     },
     {
@@ -20,7 +20,7 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "dest": "/public/static/$1"
     },
     {
       "src": "/(.*)",
