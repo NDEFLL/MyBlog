@@ -2,13 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "manage.py",
-      "use": "@vercel/python",
-      "config": {
-        "cmd": "python manage.py collectstatic --noinput && cp -r public/static/* public/"
-      }
-    },
-    {
       "src": "MyBlog/wsgi.py",
       "use": "@vercel/python",
       "config": {
@@ -20,7 +13,7 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/public/static/$1"
+      "dest": "/static/$1"
     },
     {
       "src": "/(.*)",
