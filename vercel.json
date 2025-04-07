@@ -5,7 +5,7 @@
       "src": "manage.py",
       "use": "@vercel/python",
       "config": {
-        "cmd": "echo --- RUNNING COLLECTSTATIC --- && python manage.py collectstatic --noinput"
+        "cmd": "python manage.py collectstatic --noinput"
       }
     },
     {
