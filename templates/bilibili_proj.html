@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>B站自媒体运营</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        .project-process {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .project-process li {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: calc(2 * (150px + 20px));
+        }
+
+        .thumbnail {
+            width: 150px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .thumbnail img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .thumbnail span {
+            display: block;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 4px;
+        }
+        .result-summary img{
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>B站直播运营分析项目流程</h1>
+    <div class="container">
+        <div class="text-container">
+            <ul class="project-process">
+                <li>1 -> 创建虚拟机并搭建Hadoop集群以及MySQL和hive</li>
+                <li>2 -> 使用八爪鱼采集器采集项目中所需要的数据</li>
+                <li>3 -> 使用Kettle将采集的数据格式转化为所需的格式，并对所需字段进行处理</li>
+                <li>4 -> 利用hive对数据进行分析</li>
+                <li>5 -> 利用hive对数据进行分析</li>
+                <li>6 -> 分析结果可视化</li>
+            </ul>
+        </div>
+        <div class="image-container">
+            <div class="thumbnail" onclick="openLightbox('{% static 'img/bili/datacollect.png' %}')">
+                <img src="{% static 'img/bili/datacollect.png' %}" alt="数据采集">
+                <span>2 数据采集</span>
+            </div>
+            <div class="thumbnail" onclick="openLightbox('{% static 'img/bili/dataprep.png' %}')">
+                <img src="{% static 'img/bili/dataprep.png' %}" alt="数据预处理">
+                <span>3 数据预处理</span>
+            </div>
+            <div class="thumbnail" onclick="openLightbox('{% static 'img/bili/createtable.png' %}')">
+                <img src="{% static 'img/bili/createtable.png' %}" alt="创建表">
+                <span>4 创建表</span>
+            </div>
+            <div class="thumbnail" onclick="openLightbox('{% static 'img/bili/sqlselect.png' %}')">
+                <img src="{% static 'img/bili/sqlselect.png' %}" alt="数据分析">
+                <span>5 数据分析</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="result-summary">
+        <p>内容布局：游戏类直播如 "明日之后""CF 手游""英雄联盟" 吸引大量观众，可以加大游戏板块资源投入，邀请知名游戏主播、举办游戏赛事直播等，巩固优势。<br>
+            "舞见" 这类娱乐才艺分区也有一定受众，可挖掘更多舞蹈才艺主播，丰富直播内容形式。<br>
+            "萌宅领域" 观看人数较少，需思考内容优化方向，比如结合热门元素调整直播主题。
+        </p>
+        <p>
+            资源分配：依据观看人数差异，在推广资源、流量扶持上向 "明日之后" 等热门分区倾斜，同时也为观看人数较少的分区制定针对性扶持计划，避免资源过度集中。<br>
+            用户拓展：针对 "放松电台" 这类有潜力的分区，分析其受众特点，通过精准营销吸引更多相似兴趣用户。利用热门分区流量，进行跨分区宣传，引导用户关注其他分区内容，提升整体用户活跃度和留存率。
+        </p>
+        <img src={% static 'img/bili/analysis1.png' %}>
+        
+        <p>观看高峰：21 点平均观看人数达 6.9 千，为全天峰值；3 点时也较高，有 5.5 千。这两个时段用户闲暇时间较多，可能是下班后或睡前放松时刻。建议在此期间安排热门主播直播、举办重要活动或发布精彩内容，以充分利用流量高峰，提升热度和用户参与度。</p>
+        <p>观看低谷：9 点平均观看人数仅 0.9 千，处于低谷。可利用该时段进行系统维护、内容审核等后台工作，避免在用户较少时安排重要直播或活动。</p>
+        <p>其他时段：0 点观看人数为 2.3 千，有一定用户量，可考虑安排深夜档特色节目。12 点、15 点、18 点观看人数相对稳定在 1.3 - 1.9 千 ，可针对性地推送适合该时段用户需求的内容，如午间休息时的轻松娱乐内容、下班后的技能提升类直播等。</p>
+        
+        <img src={% static 'img/bili/analysis2.png' %}>
+    </div>
+    
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="大图">
+    </div>
+    
+    <script>
+        function openLightbox(imgSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imgSrc;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+        }
+    </script>
+</body>
+</html>    

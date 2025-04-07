@@ -47,3 +47,8 @@ def show_top5(request):
     return render(request, 'music.html', {'top5': top5_data})
 
 
+def project_show(request):
+    return render(request, 'projshow.html')
+
+def bilibili_proj(request):
+    return render(request, 'bilibili_proj.html')
