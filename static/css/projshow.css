@@ -1,40 +1,412 @@
-*{
-    padding:0 ;
+/* 全局样式 */
+body {
+    /* 设置整个页面的背景颜色为浅灰色 */
+    background-color: #f3f4f6;
+    /* 使用无衬线字体 */
+    font-family: sans-serif;
+    /* 去除默认外边距 */
     margin: 0;
-}
-
-body{
-    background: url("../img/hjbg.png");
-    background-repeat: no-repeat;
-    background-size:cover;
-    /* 磨砂玻璃效果 */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(8px); /* Safari 支持 */
-    /* 透明叠加层 */
-    background-color: rgba(255, 255, 255, 0.3);
-    /* 确保内容高度至少为视口高度 */
+    /* 设置flex布局 */
+    display: flex;
     min-height: 100vh;
-    margin: 0;
-    padding: 20px;
 }
 
-.glass-panel {
-    width: 60%;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-header{
-    padding: 20px;
+/* 侧边栏样式 */
+.sidebar {
+    width: 250px;
     background-color: white;
-    border-bottom: 2px solid #339ad9;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
 }
 
-header h2{
-    color: #535353;
+/* 侧边栏头部样式 */
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 侧边栏头像样式 */
+.sidebar-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* 侧边栏菜单样式 */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 侧边栏菜单项样式 */
+.sidebar-menu li {
+    margin-bottom: 10px;
+}
+
+/* 侧边栏链接样式 */
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* 侧边栏链接悬停样式 */
+.sidebar-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* 侧边栏图标样式 */
+.sidebar-menu i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* 侧边栏激活项样式 */
+.sidebar-menu a.active {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+/* 主内容区域样式 */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 头部样式 */
+header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #3b82f6;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* 头部标题样式 */
+header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* 主体内容样式 */
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+/* 项目类型标题样式 */
+h4 {
+    /* 设置项目类型标题的底部外边距为 1rem */
+    margin-bottom: 1rem;
+}
+
+/* 折叠面板样式 */
+main h4 {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    position: relative;
+}
+
+main h4:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+main h4::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    transition: transform 0.3s ease;
+    position: absolute;
+    right: 20px;
+}
+
+main h4.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+main h4::before {
+    content: '展开';
+    font-size: 0.9em;
+    color: #666;
+    position: absolute;
+    right: 40px;
+}
+
+main h4.collapsed::before {
+    content: '收起';
+}
+
+/* 折叠内容样式 */
+main .project-grid {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+main .project-grid.collapsed {
+    max-height: 200px;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+main .project-grid.collapsed .project-card {
+    background: none;
+    box-shadow: none;
+    padding: 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+main .project-grid.collapsed .project-card:hover {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+main .project-grid.collapsed .project-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+main .project-grid.collapsed .project-card .card-header i {
+    font-size: 1.2em;
+    color: #666;
+}
+
+main .project-grid.collapsed .project-card .card-header h2 {
+    font-size: 1em;
+    margin: 0;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+main .project-grid.collapsed .project-card:hover .card-header h2 {
+    color: #3b82f6;
+}
+
+main .project-grid.collapsed .project-card p,
+main .project-grid.collapsed .project-card a {
+    display: none;
+}
+
+/* 项目网格布局样式 */
+.project-grid {
+    /* 使用网格布局 */
+    display: grid;
+    /* 默认情况下，项目以一列显示 */
+    grid-template-columns: 1fr;
+    /* 项目之间的间距为 2rem */
+    gap: 2rem;
+}
+
+/* 当屏幕宽度大于等于 768px 时 */
+@media (min-width: 768px) {
+    .project-grid {
+        /* 项目以两列显示 */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 当屏幕宽度大于等于 1024px 时 */
+@media (min-width: 1024px) {
+    .project-grid {
+        /* 项目以三列显示 */
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 项目卡片样式 */
+.project-card {
+    /* 设置项目卡片的背景颜色为白色 */
+    background-color: white;
+    /* 圆角半径为 0.5rem */
+    border-radius: 0.5rem;
+    /* 添加阴影效果 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* 上下内边距为 1.5rem */
+    padding: 1.5rem;
+    /* 为卡片添加过渡效果，当鼠标悬停时实现平滑缩放 */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* 项目卡片鼠标悬停样式 */
+.project-card:hover {
+    /* 当鼠标悬停在项目卡片上时，卡片放大 1.05 倍 */
+    transform: scale(1.05);
+}
+
+/* 卡片头部样式 */
+.card-header {
+    /* 设置卡片头部为 flex 布局 */
+    display: flex;
+    /* 元素水平居中对齐 */
+    align-items: center;
+    /* 元素之间的间距为 1rem */
+    gap: 1rem;
+}
+
+/* 卡片头部图标样式 */
+.card-header i {
+    /* 设置卡片头部图标的字体大小为 1.875rem */
+    font-size: 1.875rem;
+}
+
+/* 卡片头部标题样式 */
+.card-header h2 {
+    /* 设置卡片头部标题的字体大小为 1.25rem */
+    font-size: 1.25rem;
+    /* 字体加粗 */
+    font-weight: bold;
+    /* 去除标题的默认外边距 */
+    margin: 0;
+}
+
+/* 项目卡片段落样式 */
+.project-card p {
+    /* 设置项目卡片中段落的文字颜色为深灰色 */
+    color: #4b5563;
+    /* 段落的顶部外边距为 1rem */
+    margin-top: 1rem;
+    /* 底部外边距为 0 */
+    margin-bottom: 0;
+}
+
+/* 项目卡片链接样式 */
+.project-card a {
+    /* 设置项目卡片中链接的文字颜色为蓝色 */
+    color: #3b82f6;
+    /* 链接的顶部外边距为 1rem */
+    margin-top: 1rem;
+    /* 显示为内联块元素 */
+    display: inline-block;
+    /* 去除链接的下划线 */
+    text-decoration: none;
+}
+
+/* 项目卡片链接鼠标悬停样式 */
+.project-card a:hover {
+    /* 当鼠标悬停在项目卡片的链接上时，显示下划线 */
+    text-decoration: underline;
+}
+
+/* 页脚样式 */
+footer {
+    /* 设置页脚的背景颜色为浅灰色 */
+    background-color: #e5e7eb;
+    /* 文字居中显示 */
+    text-align: center;
+    /* 上下内边距为 1rem */
+    padding: 1rem 0;
+}
+
+/* 页脚文字样式 */
+footer p {
+    /* 设置页脚文字的颜色为深灰色 */
+    color: #4b5563;
+    /* 去除默认外边距 */
+    margin: 0;
+}
+
+/* 结果摘要样式 */
+.result-summary {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.result-summary:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.result-summary h3 {
+    color: #333;
+    font-size: 1.2em;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.result-summary p {
+    color: #666;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.result-summary .highlight {
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+.result-summary .date {
+    color: #888;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+.result-summary .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.result-summary .tag {
+    background-color: #e9ecef;
+    color: #666;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    transition: all 0.3s ease;
+}
+
+.result-summary .tag:hover {
+    background-color: #3b82f6;
+    color: white;
 }
