@@ -20,14 +20,11 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/static/$1"
     },
     {
       "src": "/(.*)",
       "dest": "MyBlog/wsgi.py"
     }
-  ],
-  "static": {
-    "directory": "staticfiles"
-  }
+  ]
 }
