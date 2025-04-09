@@ -38,4 +38,4 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root="F:/项目/网易云音乐/Data/picture/"  # 实际路径
-    )
+)
