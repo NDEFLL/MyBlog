@@ -31,12 +31,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', blog_home, name='home'),
     path('blog/', include('blog.urls')),
-    path('music/', include('music.urls')),
     path('projshow/', include('proj.urls')),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root="F:/项目/网易云音乐/Data/picture/"  # 实际路径
-)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -22,7 +22,7 @@ def blog_home(request):
 
 def article_list(request):
     articles = Article.objects.filter(is_published=True).order_by('-created_at')
-    return render(request, 'article_list.html', {'articles': articles})
+    return render(request, 'blog/article_list.html', {'articles': articles})
 
 def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
