@@ -20,7 +20,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 import blog.views
-from blog.views import blog_home
 
 from proj import views
 
@@ -30,7 +29,7 @@ from proj import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', blog_home, name='home'),
+    path('', include('blog.urls')),
     path('projshow/',views.project_show),
     path('articles/',blog.views.article_list)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
