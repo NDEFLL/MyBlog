@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from blog.views import blog_home
 
 import proj.views
 from proj import views
@@ -28,10 +29,10 @@ from proj import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', blog_home, name='home'),
     path('blog/', include('blog.urls')),
-    path('music/', views.show_top5, name='top5'),
-    path('projshow/',views.project_show,name='项目展示列表'),
-    path('projshow/biliproj/',views.bilibili_proj)
+    path('music/', include('music.urls')),
+    path('projshow/', include('proj.urls')),
 ]
 
 if settings.DEBUG:
