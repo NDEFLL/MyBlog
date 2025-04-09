@@ -29,6 +29,7 @@ from proj import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
+    path('proj/', include('proj.urls')),
     path('music/', views.show_top5, name='top5'),
     path('projshow/',views.project_show,name='项目展示列表'),
     path('projshow/biliproj/',views.bilibili_proj)
@@ -38,4 +39,4 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root="F:/项目/网易云音乐/Data/picture/"  # 实际路径
-)
+    )
