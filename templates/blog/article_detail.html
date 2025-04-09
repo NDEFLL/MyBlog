@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <article class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{ article.title }}</h1>
+            <div class="text-muted mb-3">
+                <small>
+                    <i class="fas fa-user"></i> {{ article.author.username }}
+                    <i class="fas fa-clock ml-2"></i> {{ article.created_at|date:"Y-m-d H:i" }}
+                    <i class="fas fa-eye ml-2"></i> {{ article.views }}
+                </small>
+            </div>
+            <div class="article-content">
+                {{ article.content|linebreaks }}
+            </div>
+        </div>
+        <div class="card-footer">
+            {% if user.is_superuser %}
+            <div class="btn-group">
+                <a href="{% url 'article_edit' article.pk %}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i> 编辑
+                </a>
+                <a href="{% url 'article_delete' article.pk %}" class="btn btn-outline-danger" 
+                   onclick="return confirm('确定要删除这篇文章吗？')">
+                    <i class="fas fa-trash"></i> 删除
+                </a>
+            </div>
+            {% endif %}
+            <a href="{% url 'article_list' %}" class="btn btn-outline-secondary float-right">
+                <i class="fas fa-arrow-left"></i> 返回列表
+            </a>
+        </div>
+    </article>
+</div>
+{% endblock %} 
