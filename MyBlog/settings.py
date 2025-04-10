@@ -99,11 +99,11 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASS'),  # 密码
         'HOST': os.getenv('DB_HOST'),      # RDS终端节点
         'PORT': os.getenv('DB_PORT', '5432'),
-        # 'CONN_MAX_AGE': 60,  # 连接复用（秒）
+        'CONN_MAX_AGE': 60,  # 连接复用（秒）
         'OPTIONS': {
             'sslmode': 'require',
             'sslrootcert': os.path.join(BASE_DIR, 'global-bundle.pem'),
-            # 'connect_timeout': 3,  # 连接超时（秒）
+            'connect_timeout': 3,  # 连接超时（秒）
         }
     }
 }
