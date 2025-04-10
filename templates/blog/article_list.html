@@ -1,8 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load static %}
 
 {% block content %}
+<!-- 文章列表页面容器 -->
 <div class="container mt-4">
+    <!-- 页面标题和新建文章按钮 -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>文章列表</h1>
         {% if user.is_authenticated %}
@@ -12,29 +14,57 @@
         {% endif %}
     </div>
 
+    <!-- 文章列表 -->
     <div class="row">
         {% for article in articles %}
+        <!-- 单个文章卡片 -->
         <div class="col-md-6 mb-4">
             <div class="card h-100">
+                <!-- 文章缩略图 -->
+                {% if article.image %}
+                <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}" style="height: 200px; object-fit: cover;">
+                {% endif %}
                 <div class="card-body">
+                    <!-- 文章标题 -->
                     <h5 class="card-title">{{ article.title }}</h5>
-                    <p class="card-text text-muted">
+                    
+                    <!-- 文章元信息 -->
+                    <div class="text-muted mb-2">
+                        <!-- 发布时间 -->
                         <small>
                             <i class="fas fa-user"></i> {{ article.author.username }}
                             <i class="fas fa-clock ml-2"></i> {{ article.created_at|date:"Y-m-d" }}
                             <i class="fas fa-eye ml-2"></i> {{ article.views }}
                         </small>
-                    </p>
+                    </div>
+                    
+                    <!-- 文章预览内容 -->
                     <p class="card-text">{{ article.content|truncatechars:200 }}</p>
-                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-outline-primary">阅读更多</a>
+                    
+                    <!-- 文章操作按钮 -->
+                    <div class="d-flex justify-content-between">
+                        <!-- 查看文章详情按钮 -->
+                        <a href="{% url 'article_detail' article.pk %}" class="btn btn-outline-primary">
+                            查看详情
+                        </a>
+                        <!-- 编辑文章按钮（仅登录用户可见） -->
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'article_edit' article.pk %}" class="btn btn-outline-secondary">
+                            编辑
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
         {% empty %}
+        <!-- 无文章时的提示信息 -->
         <div class="col-12">
-            <div class="alert alert-info">暂无文章</div>
+            <div class="alert alert-info">
+                暂无文章，点击"新建文章"开始创作吧！
+            </div>
         </div>
         {% endfor %}
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

@@ -1,51 +1,58 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load static %}
 
 {% block content %}
+<!-- 文章表单容器 -->
 <div class="container mt-4">
     <div class="card">
         <div class="card-body">
+            <!-- 表单标题：根据是否编辑现有文章显示不同标题 -->
             <h2 class="card-title mb-4">
                 {% if form.instance.pk %}编辑文章{% else %}发布新文章{% endif %}
             </h2>
             
-            <form method="post">
+            <!-- 文章表单开始 -->
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 
+                <!-- 标题输入字段 -->
                 <div class="form-group">
                     <label for="{{ form.title.id_for_label }}">标题</label>
                     {{ form.title }}
                     {% if form.title.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.title.errors }}
-                    </div>
+                        <div class="invalid-feedback d-block">
+                            {{ form.title.errors }}
+                        </div>
                     {% endif %}
                 </div>
-
-                <div class="form-group">
+                <!-- 内容输入字段 -->
+                <div class="form-group mt-3">
                     <label for="{{ form.content.id_for_label }}">内容</label>
                     {{ form.content }}
                     {% if form.content.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.content.errors }}
-                    </div>
+                        <div class="invalid-feedback d-block">
+                            {{ form.content.errors }}
+                        </div>
                     {% endif %}
                 </div>
-
-                <div class="form-group form-check">
+                
+                <!-- 发布状态复选框 -->
+                <div class="form-group form-check mt-3">
                     {{ form.is_published }}
                     <label class="form-check-label" for="{{ form.is_published.id_for_label }}">
                         立即发布
                     </label>
                 </div>
-
-                <div class="form-group">
+                
+                <!-- 表单操作按钮 -->
+                <div class="form-group mt-4">
                     <button type="submit" class="btn btn-primary">
                         {% if form.instance.pk %}保存修改{% else %}发布文章{% endif %}
                     </button>
                     <a href="{% url 'article_list' %}" class="btn btn-secondary">取消</a>
                 </div>
             </form>
+            <!-- 文章表单结束 -->
         </div>
     </div>
 </div>

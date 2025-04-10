@@ -16,12 +16,24 @@
                 <h3>Ndefl</h3>
             </a>
         </div>
-        
+
         <ul class="sidebar-menu">
             <li>
                 <a href="/" class="active">
                     <i class="fa-solid fa-house"></i>
                     <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.csdn.net/m0_68533987?type=blog" target="_blank">
+                    <i class="fa-solid fa-blog"></i>
+                    <span>CSDN</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/NDEFLL" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
                 </a>
             </li>
             <li>
@@ -129,14 +141,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const headers = document.querySelectorAll('main h4');
-        
+
         // 默认将所有内容收起
         headers.forEach(header => {
             const content = header.nextElementSibling;
             header.classList.add('collapsed');
             content.classList.add('collapsed');
         });
-        
+
         // 添加点击事件
         headers.forEach(header => {
             header.addEventListener('click', function() {

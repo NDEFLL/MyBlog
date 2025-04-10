@@ -27,9 +27,13 @@ from proj import views
 #     path('admin/', admin.site.urls),
 # ]
 
-urlpatterns = [
+urlpatterns = ([
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
+    path('proj/', include('proj.urls')),
     path('projshow/',views.project_show),
-    path('articles/',blog.views.article_list)
+    path('articles/',blog.views.article_list),
+    # 添加 CKEditor 的 URL 配置
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))

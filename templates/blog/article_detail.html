@@ -1,38 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load static %}
 
 {% block content %}
+<!-- 文章详情页面容器 -->
 <div class="container mt-4">
-    <article class="card">
+    <div class="card">
         <div class="card-body">
-            <h1 class="card-title">{{ article.title }}</h1>
-            <div class="text-muted mb-3">
+            <!-- 文章标题 -->
+            <h1 class="card-title mb-4">{{ article.title }}</h1>
+            
+            <!-- 文章图片 -->
+            {% if article.image %}
+            <div class="article-image mb-4">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+            
+            <!-- 文章元信息 -->
+            <div class="text-muted mb-4">
+                <!-- 发布时间 -->
                 <small>
-                    <i class="fas fa-user"></i> {{ article.author.username }}
-                    <i class="fas fa-clock ml-2"></i> {{ article.created_at|date:"Y-m-d H:i" }}
-                    <i class="fas fa-eye ml-2"></i> {{ article.views }}
+                    <i class="far fa-clock"></i> {{ article.created_at|date:"Y-m-d H:i" }}
+                </small>
+                <!-- 阅读量 -->
+                <small class="ml-3">
+                    <i class="far fa-eye"></i> {{ article.views }}
                 </small>
             </div>
+            
+            <!-- 文章内容 -->
             <div class="article-content">
                 {{ article.content|linebreaks }}
             </div>
-        </div>
-        <div class="card-footer">
-            {% if user.is_superuser %}
-            <div class="btn-group">
-                <a href="{% url 'article_edit' article.pk %}" class="btn btn-outline-primary">
-                    <i class="fas fa-edit"></i> 编辑
+            
+            <!-- 文章操作按钮 -->
+            <div class="mt-4">
+                <a href="{% url 'article_list' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> 返回列表
                 </a>
-                <a href="{% url 'article_delete' article.pk %}" class="btn btn-outline-danger" 
-                   onclick="return confirm('确定要删除这篇文章吗？')">
-                    <i class="fas fa-trash"></i> 删除
+                {% if user.is_authenticated %}
+                <a href="{% url 'article_edit' article.pk %}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> 编辑文章
                 </a>
+                {% endif %}
             </div>
-            {% endif %}
-            <a href="{% url 'article_list' %}" class="btn btn-outline-secondary float-right">
-                <i class="fas fa-arrow-left"></i> 返回列表
-            </a>
         </div>
-    </article>
+    </div>
 </div>
 {% endblock %} 
