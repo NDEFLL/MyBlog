@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
-import pymysql
-pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,12 +83,16 @@ WSGI_APPLICATION = 'MyBlog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',  # 数据库名
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库密码
-        'HOST': 'localhost',  # 数据库主机地址，通常为 'localhost'
-        'PORT': '3306',  # 数据库端口，通常为 '3306'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),      # 数据库名称
+        'USER': os.getenv('DB_USER'),      # 用户名
+        'PASSWORD': os.getenv('DB_PASS'),  # 密码
+        'HOST': os.getenv('DB_HOST'),      # RDS终端节点
+        'PORT': os.getenv('DB_PORT'),
+        'OPTIONS': {
+            'sslmode': 'require',  # 强制SSL
+            'sslrootcert': os.path.join(BASE_DIR, 'global-bundle.pem'),  # SSL证书
+        }
     }
 }
 
