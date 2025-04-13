@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-a726d^tv8b4qptsskmfg%b#sl2l*@dw36b+a%3p2n%!cy0bin2
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # 生产环境必须关闭 DEBUG
-DEBUG = True
+DEBUG = False
 
 # 允许 Vercel 的域名
 ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1','localhost','ndefl.top']    #记得把自定义域名添加进去
@@ -158,9 +158,20 @@ CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
             'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
-            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo'
+            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters',  # 添加这个关键插件
         ],
+        'language': {
+            'ui': 'zh-cn',  # 界面语言
+            'content': 'zh-cn'  # 内容语言
+        },
         'height': 300,
         'width': '100%',
     },
+    'fantasy': {
+        'toolbar': ['fontFamily', '|', '🌈', '🐶', '🍔'],  # 注意：表情需替换为真实插件名
+        'language': 'zh-cn',
+        'fontFamily': {
+            'options': ['微软雅黑', '宋体', '仿宋', '楷体']
+        }
+    }
 }

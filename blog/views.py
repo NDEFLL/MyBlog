@@ -45,6 +45,7 @@ def article_create(request):
         if form.is_valid():
             article = form.save(commit=False)
             article.author = request.user
+            article.content = request.POST.get('content')
             article.save()
             messages.success(request, '文章发布成功！')
             return redirect('article_detail', pk=article.pk)

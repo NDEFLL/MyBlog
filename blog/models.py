@@ -32,7 +32,7 @@ class Article(models.Model):
     is_published = models.BooleanField(default=True, verbose_name='是否发布')
     views = models.PositiveIntegerField(default=0, verbose_name='浏览量')
     image = models.ImageField(upload_to='article_images/', null=True, blank=True)
-    content = CKEditor5Field('Content', config_name='default')  # 使用 CKEditor 5
+    content = CKEditor5Field('内容')  # 使用 CKEditor 5
    # config_name指定ckeditor配置文件，不指定就使用default
 
     class Meta:
