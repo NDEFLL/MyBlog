@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 
+
 {% block content %}
 <!-- 文章详情页面容器 -->
 <div class="container mt-4">
@@ -18,19 +19,23 @@
             
             <!-- 文章元信息 -->
             <div class="text-muted mb-4">
-                <!-- 发布时间 -->
-                <small>
+                <!-- 发布时间
+                 <small>
                     <i class="far fa-clock"></i> {{ article.created_at|date:"Y-m-d H:i" }}
                 </small>
-                <!-- 阅读量 -->
-                <small class="ml-3">
+                 -->
+                
+                <!-- 阅读量
+                 <small class="ml-3">
                     <i class="far fa-eye"></i> {{ article.views }}
                 </small>
+                 -->
+                
             </div>
             
             <!-- 文章内容 -->
             <div class="article-content">
-                {{ article.content|linebreaks }}
+                {{ article.content|safe |linebreaks }}
             </div>
             
             <!-- 文章操作按钮 -->

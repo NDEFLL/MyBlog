@@ -2,6 +2,7 @@ from django.urls import path,include
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from django_ckeditor_5.views import upload_file
 
 urlpatterns = [
     path('', views.blog_home, name='blog_home'),
@@ -11,4 +12,5 @@ urlpatterns = [
     path('articles/<int:pk>/edit/', views.article_edit, name='article_edit'),
     path('articles/<int:pk>/delete/', views.article_delete, name='article_delete'),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
+    path('upload/', upload_file, name='ckeditor_5_upload'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

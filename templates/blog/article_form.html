@@ -27,17 +27,18 @@
                 
                 <!-- 内容字段 - 使用Django的widget -->
                 <div class="form-group">
-                    {{ form.content.label_tag }}
-                    {{ form.content }}
-                    {{ form.content.errors }}
+                    {{ form.content.label_tag }}    <!-- 内容标签 -->
+                    {{ form.content }}  <!-- 这里会自动渲染CKEditor 5富文本编辑器 -->
+                    {{ form.content.errors }}   <!-- 内容验证错误 -->
                 </div>
                 
                 <!-- 发布状态 -->
                 <div class="form-group">
-                    {{ form.is_published.label_tag }}
-                    {{ form.is_published }}
+                    {{ form.is_published.label_tag }}   <!-- 发布状态标签 -->
+                    {{ form.is_published }}  <!-- 复选框 -->
                 </div>
                 
+                <!-- 提交按钮 -->
                 <button type="submit" class="btn btn-primary">
                     {% if form.instance.pk %}保存修改{% else %}发布文章{% endif %}
                 </button>
@@ -48,4 +49,11 @@
 
 <!-- 必须加载form.media才能显示CKEditor -->
 {{ form.media }}
-{% endblock %}
+<!-- 
+  这个标签会自动插入：
+  1. CKEditor 5的核心JS文件
+  2. 配置初始化代码
+  3. 相关CSS样式
+-->
+    
+{% endblock %}   <!-- 结束content块 -->
