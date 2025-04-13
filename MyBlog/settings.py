@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'blog',
     'proj',
     'django_ckeditor_5',
-    'bleach',
 ]
 
 MIDDLEWARE = [
