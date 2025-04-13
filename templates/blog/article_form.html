@@ -1,59 +1,51 @@
-{% extends 'blog/base.html' %}
-{% load static %}
+<!-- article_form.html -->
+{% extends 'blog/base.html' %}  <!-- 继承基础模板，保持整体页面布局一致 -->
+{% load static %}   <!-- 加载静态文件标签，用于引用CSS/JS -->
 
-{% block content %}
-<!-- 文章表单容器 -->
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-body">
-            <!-- 表单标题：根据是否编辑现有文章显示不同标题 -->
-            <h2 class="card-title mb-4">
+{% block content %}     <!-- 定义内容块，插入到基础模板的content区块中 -->
+<!-- 文章表单容器 - Bootstrap卡片样式 -->
+<div class="container mt-4">    <!-- 主容器，mt-4是上边距 -->
+    <div class="card">  <!-- 卡片组件 -->
+        <div class="card-body">     <!-- 卡片内容区 -->
+            <!-- 动态标题：根据是否编辑现有文章显示不同文字 -->
+            <h2 class="card-title mb-4">    <!-- 卡片标题，mb-4是下边距 -->
+                <!-- 如果表单实例有pk(已存在文章)显示"编辑"，否则显示"发布" -->
                 {% if form.instance.pk %}编辑文章{% else %}发布新文章{% endif %}
             </h2>
-            
-            <!-- 文章表单开始 -->
+        
+            <!-- 使用Django表单 -->
+            <!-- 表单开始 - 自动处理文件上传 -->
             <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+                {% csrf_token %}    <!-- Django的CSRF保护令牌，必须要有 -->
                 
-                <!-- 标题输入字段 -->
+                <!-- 标题字段 -->
                 <div class="form-group">
-                    <label for="{{ form.title.id_for_label }}">标题</label>
-                    {{ form.title }}
-                    {% if form.title.errors %}
-                        <div class="invalid-feedback d-block">
-                            {{ form.title.errors }}
-                        </div>
-                    {% endif %}
+                    {{ form.title.label_tag }}  <!-- 自动生成label标签 -->
+                    {{ form.title }}    <!-- 自动生成input字段 -->
+                    {{ form.title.errors }} <!-- 显示字段验证错误 -->
                 </div>
-                <!-- 内容输入字段 -->
-                <div class="form-group mt-3">
-                    <label for="{{ form.content.id_for_label }}">内容</label>
+                
+                <!-- 内容字段 - 使用Django的widget -->
+                <div class="form-group">
+                    {{ form.content.label_tag }}
                     {{ form.content }}
-                    {% if form.content.errors %}
-                        <div class="invalid-feedback d-block">
-                            {{ form.content.errors }}
-                        </div>
-                    {% endif %}
+                    {{ form.content.errors }}
                 </div>
                 
-                <!-- 发布状态复选框 -->
-                <div class="form-group form-check mt-3">
+                <!-- 发布状态 -->
+                <div class="form-group">
+                    {{ form.is_published.label_tag }}
                     {{ form.is_published }}
-                    <label class="form-check-label" for="{{ form.is_published.id_for_label }}">
-                        立即发布
-                    </label>
                 </div>
                 
-                <!-- 表单操作按钮 -->
-                <div class="form-group mt-4">
-                    <button type="submit" class="btn btn-primary">
-                        {% if form.instance.pk %}保存修改{% else %}发布文章{% endif %}
-                    </button>
-                    <a href="{% url 'article_list' %}" class="btn btn-secondary">取消</a>
-                </div>
+                <button type="submit" class="btn btn-primary">
+                    {% if form.instance.pk %}保存修改{% else %}发布文章{% endif %}
+                </button>
             </form>
-            <!-- 文章表单结束 -->
         </div>
     </div>
 </div>
-{% endblock %} 
+
+<!-- 必须加载form.media才能显示CKEditor -->
+{{ form.media }}
+{% endblock %}
