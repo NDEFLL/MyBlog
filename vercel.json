@@ -19,9 +19,6 @@
     {
       "src": "manage.py",
       "use": "@vercel/python",
-      "config": {
-        "includeFiles": ["global-bundle.pem"]
-      }
     }
   ],
   "routes": [
