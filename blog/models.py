@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 from django_ckeditor_5.fields import CKEditor5Field
+from django.utils.safestring import mark_safe
 
 
 # Create your models here.
