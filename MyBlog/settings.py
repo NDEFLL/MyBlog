@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'blog',
     'proj',
     'django_ckeditor_5',
+    'bleach',
 ]
 
 MIDDLEWARE = [
@@ -160,6 +160,18 @@ CKEDITOR_5_CONFIGS = {
             'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
             'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters',  # 添加这个关键插件
         ],
+        'image': {
+                'toolbar': [
+                    'imageTextAlternative',  # 图片描述文本
+                    'imageStyle:inline',     # 内联样式
+                    'imageStyle:block',      # 块级样式
+                    'imageStyle:side',       # 侧边样式
+                    'linkImage'              # 图片链接
+                ],
+                'upload': {
+                    'types': ['png', 'jpg', 'jpeg'],  # 允许的文件类型
+                }
+        },
         'language': {
             'ui': 'zh-cn',  # 界面语言
             'content': 'zh-cn'  # 内容语言
