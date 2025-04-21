@@ -48,6 +48,14 @@
                     <span>文章</span>
                 </a>
             </li>
+            {% if user.is_superuser %}
+            <li>
+                <a href="/articles/create/" class="{% if request.path == '/blog/articles_create' %}active{% endif %}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>发布文章</span>
+                </a>
+            </li>
+            {% endif %}
         </ul>
     </nav>
     <div class="main-content">
@@ -65,9 +73,9 @@
                     <p>2021.5 - 2021.6</p>
                     <p>上大学后做的第一个项目，担任组长，小组共6人</p>
                     <p>技术栈：Hadoop、MapReduce、Python</p>
-                    <p>项目内容：基于Hadoop</p>
-                    <a href="#">了解更多</a>
+                    <a href={% url 'gxddc_proj' %}>了解更多</a>
                 </div>
+                <!--
                 <div class="project-card">
                     <div class="card-header">
                         <i class="fa-solid fa-chart-line"></i>
@@ -78,15 +86,16 @@
                     <p>项目内容：</p>
                     <a href="biliproj/" target="_blank" rel="noopener noreferrer">了解更多</a>
                 </div>
+                -->
+
                 <div class="project-card">
                     <div class="card-header">
                         <i class="fa-solid fa-"></i>
-                        <h2>基于Python的疫情数据分析与可视化</h2>
+                        <h2>基于Python的疫情数据分析与可视化大屏</h2>
                     </div>
                     <p>2023</p>
-                    <p>技术栈：Python、Flask</p>
-                    <p>项目内容： </p>
-                    <a href="#">了解更多</a>
+                    <p>技术栈：Python、Flask、Echarts...</p>
+                    <a href="{% url 'yq_proj' %}">了解更多</a>
                 </div>
                 <div class="project-card">
                     <div class="card-header">
@@ -94,9 +103,8 @@
                         <h2>基于Kaggle心脏病数据集的数据分析和分类预测</h2>
                     </div>
                     <p>2024.11</p>
-                    <p>技术栈：Python、Pandas</p>
-                    <p>项目内容：利用 Kaggle 提供的心脏病数据集，通过数据分析和机器学习算法，建立有效的心脏病预测模型，为临床诊断和预防提供支持。 </p>
-                    <a href="#">了解更多</a>
+                    <p>技术栈：Python、Pandas、sklearn</p>
+                    <a href={% url 'heart_proj' %}>了解更多</a>
                 </div>
                 <div class="project-card">
                     <div class="card-header">
@@ -104,9 +112,8 @@
                         <h2>基于Python的广东旅游数据分析与可视化</h2>
                     </div>
                     <p>2024.10-2024.12</p>
-                    <p>技术栈：Python、Flask</p>
-                    <p>项目内容： </p>
-                    <a href="#">了解更多</a>
+                    <p>本科毕业设计</p>
+                    <a href='#'>暂无编辑，请勿点击</a>
                 </div>
             </div>
             <h4>爬虫</h4>
@@ -119,7 +126,7 @@
                     <p>2024.06.17-2024.06.20</p>
                     <p>技术栈：Python、Scrapy、JS逆向</p>
                     <p>项目内容：使用Scrapy框架采集网易云歌单数据，并使用双管道存储数据；使用JS逆向工程对评论数据进行采集</p>
-                    <a href="#">了解更多</a>
+                    <a href="https://github.com/NDEFLL/wyymusic-spider" target="_blank">GitHub地址</a>
                 </div>
                 <div class="project-card">
                     <div class="card-header">
@@ -129,12 +136,12 @@
                     <p>2024.12</p>
                     <p>技术栈：Python、JS逆向</p>
                     <p>项目内容：使用JS逆向工程对百度指数数据进行采集</p>
-                    <a href="#">了解更多</a>
+                    <a href="https://github.com/NDEFLL/baiduindex-spider" target="_blank">GitHub地址</a>
                 </div>
             </div>
         </main>
         <footer>
-            <p>版权所有 &copy; 2025 你的名字</p>
+            <p>版权所有 &copy; 2025 Ndefl</p>
         </footer>
     </div>
 </body>

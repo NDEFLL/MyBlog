@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}共享电动车项目{% endblock %}
+
+{% block content %}
+<style>
+
+    p{
+        width: 85%;
+        padding-left: 10px;
+    }
+    img{
+        height: 150px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+    }
+    span{
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <h1>共享电动车数据分析</h1>
+    <p>
+        <span>项目概述：</span>
+        这是一个基于 Hadoop MapReduce 的共享单车数据分析系统，用于分析不同地区在不同季度的单车使用情况。
+        项目使用分布式计算框架处理大规模数据，将处理后的数据进行分析总结，为共享电动车运营提供数据支持。</p>
+    <p>
+        <span>使用技术</span>
+        <br>
+        编程语言：Java <br>
+        数据处理框架：Hadoop MapReduce <br>
+        输入输出格式：Text/IntWritable <br>
+    </p>
+    <p><span>数据来源：</span>使用Python模拟生成广东省各地区各季度的共享电动车使用记录，共一千万条数据</p>
+    <img src={% static '/img/proj/data1.png' %}>
+    
+    <p><span>数据处理流程</span><br>
+        Mapper 阶段：<br>
+	     &nbsp; 读取输入数据（共享电动车使用记录）<br>
+	     &nbsp; 提取地区信息作为key<br>
+	     &nbsp; 统计使用次数作为value<br>
+    Reducer 阶段：<br>
+	     &nbsp; 接收相同地区的所有记录<br>
+	     &nbsp; 汇总该地区的总使用次数<br>
+	     &nbsp; 输出格式：季度+地区名称+使用次数<br>
+    </p>
+    <p>
+        <span>输出结果</span> 例：
+    </p>
+    <img src={% static '/img/proj/outputdata1.png' %}>
+
+</body>
+{% endblock %}

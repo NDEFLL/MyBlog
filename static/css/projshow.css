@@ -85,22 +85,22 @@ a{
 /* 主内容区域样式 */
 .main-content {
     flex: 1;
-    margin-left: 250px;
-    padding: 20px;
+    margin-left: 290px;
+    padding: 0 20px;
     position: relative;
     z-index: 1;
 }
 
 /* 头部样式 */
 header {
-    background-color: white;
-    padding: 20px;
+    /*padding: 20px;*/
     border-radius: 8px;
     background-color: #3b82f6;
     color: white;
     text-align: center;
     padding: 1rem 0;
     position: relative;
+    margin-top: 10px;
     z-index: 1;
 }
 
@@ -160,7 +160,7 @@ main h4.collapsed::after {
 }
 
 main h4::before {
-    content: '展开';
+    content: '点击收起';
     font-size: 0.9em;
     color: #666;
     position: absolute;
@@ -168,7 +168,7 @@ main h4::before {
 }
 
 main h4.collapsed::before {
-    content: '收起';
+    content: '点击展开';
 }
 
 /* 折叠内容样式 */
@@ -302,7 +302,7 @@ main .project-grid.collapsed .project-card a {
 /* 卡片头部标题样式 */
 .card-header h2 {
     /* 设置卡片头部标题的字体大小为 1.25rem */
-    font-size: 1.25rem;
+    font-size: 16px;
     /* 字体加粗 */
     font-weight: bold;
     /* 去除标题的默认外边距 */

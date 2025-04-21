@@ -52,3 +52,12 @@ def project_show(request):
 
 def bilibili_proj(request):
     return render(request, 'bilibili_proj.html')
+
+def gxddc_proj(request):
+    return render(request,'gxddc.html')
+
+def heart_proj(request):
+    return render(request,'heart.html')
+
+def yq_proj(request):
+    return render(request,'yq.html')
