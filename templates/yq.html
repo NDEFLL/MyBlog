@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}疫情数据分析与可视化{% endblock %}
+
+{% block content %}
+
+    <h1>疫情数据分析与可视化</h1>
+    <p>
+    数据采集：通过爬虫获取疫情相关数据。<br>
+
+    数据存储：使用MySQL数据库存储和管理数据。<br>
+    
+    数据处理与分析：利用Python和Flask从数据库提取数据并动态展示。<br>
+    
+    数据可视化：使用ECharts生成图表和地图展示数据。<br>
+    </p>
+    <img src={% static '/img/proj/yq1.png' %}>
+    
+{% endblock %}

@@ -61,3 +61,4 @@ def heart_proj(request):
 
 def yq_proj(request):
     return render(request,'yq.html')
+
