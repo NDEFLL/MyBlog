@@ -1,50 +1,43 @@
 <!-- article_form.html -->
-{% extends 'blog/base.html' %}  <!-- 继承基础模板，保持整体页面布局一致 -->
-{% load static %}   <!-- 加载静态文件标签，用于引用CSS/JS -->
+{% extends 'blog/base.html' %}
+{% load static %}
 
-{% block content %}     <!-- 定义内容块，插入到基础模板的content区块中 -->
-<!-- 文章表单容器 - Bootstrap卡片样式 -->
-<div class="container mt-4">    <!-- 主容器，mt-4是上边距 -->
-    <div class="card">  <!-- 卡片组件 -->
-        <div class="card-body">     <!-- 卡片内容区 -->
-            <!-- 动态标题：根据是否编辑现有文章显示不同文字 -->
-            <h2 class="card-title mb-4">    <!-- 卡片标题，mb-4是下边距 -->
-                <!-- 如果表单实例有pk(已存在文章)显示"编辑"，否则显示"发布" -->
-                {% if form.instance.pk %}编辑文章{% else %}发布新文章{% endif %}
-            </h2>
+{% block content %}
+<div class="container">
+    <h2>{% if article_id == 'new' %}发布新文章{% else %}编辑文章{% endif %}</h2>
+    <form method="post" enctype="multipart/form-data" id="article-form">
+        {% csrf_token %}
         
-            <!-- 使用Django表单 -->
-            <!-- 表单开始 - 自动处理文件上传 -->
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}    <!-- Django的CSRF保护令牌，必须要有 -->
-                
-                <!-- 标题字段 -->
-                <div class="form-group">
-                    {{ form.title.label_tag }}  <!-- 自动生成label标签 -->
-                    {{ form.title }}    <!-- 自动生成input字段 -->
-                    {{ form.title.errors }} <!-- 显示字段验证错误 -->
-                </div>
-                
-                <!-- 内容字段 - 使用Django的widget -->
-                <div class="form-group">
-                    {{ form.content.label_tag }}    <!-- 内容标签 -->
-                    {{ form.content }}  <!-- 这里会自动渲染CKEditor 5富文本编辑器 -->
-                    {{ form.content.errors }}   <!-- 内容验证错误 -->
-                </div>
-                
-                <!-- 发布状态 -->
-                <div class="form-group">
-                    {{ form.is_published.label_tag }}   <!-- 发布状态标签 -->
-                    {{ form.is_published }}  <!-- 复选框 -->
-                </div>
-                
-                <!-- 提交按钮 -->
-                <button type="submit" class="btn btn-primary">
-                    {% if form.instance.pk %}保存修改{% else %}发布文章{% endif %}
-                </button>
-            </form>
+        <div class="form-group">
+            <label for="id_title">标题</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error">{{ form.title.errors }}</div>
+            {% endif %}
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="id_content">内容</label>
+            {{ form.content }}
+            {% if form.content.errors %}
+                <div class="error">{{ form.content.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>
+                {{ form.is_published }}
+                发布文章
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {% if article_id == 'new' %}发布{% else %}保存{% endif %}
+            </button>
+            <a href="{% url 'article_list' %}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
 </div>
 
 <!-- 必须加载form.media才能显示CKEditor -->
@@ -55,5 +48,5 @@
   2. 配置初始化代码
   3. 相关CSS样式
 -->
-    
+
 {% endblock %}   <!-- 结束content块 -->

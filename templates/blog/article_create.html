@@ -1,5 +1,4 @@
 {% extends 'blog/base.html' %}
-
 {% load static %}
 
 {% block title %}发布文章{% endblock %}
@@ -92,25 +91,6 @@
 
 <!-- 引入 CKEditor 5 的 CDN 脚本 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const editorElement = document.getElementById('editor');
-        const form = document.getElementById('articleForm');
-        const contentInput = document.getElementById('content');
-
-        if (editorElement) {
-            ClassicEditor
-              .create(editorElement)
-              .then(editor => {
-                    form.addEventListener('submit', function () {
-                        contentInput.value = editor.getData();
-                    });
-                })
-              .catch(error => {
-                    console.error('There was a problem initializing the editor:', error);
-                });
-        }
-    });
-</script>
+    
+    
 {% endblock %}

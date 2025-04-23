@@ -13,7 +13,7 @@
             <!-- 文章图片 -->
             {% if article.image %}
             <div class="article-image mb-4">
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid rounded">
+                <img src="{{ image.url }}" alt="{{ article.title }}" class="img-fluid rounded">
             </div>
             {% endif %}
             
@@ -37,6 +37,25 @@
             <div class="article-content">
                 {{ article.content|safe |linebreaks }}
             </div>
+            
+            <!-- 文章关联的图片 -->
+            {% if article.images.all %}
+            <div class="mt-4">
+                <h4>文章图片</h4>
+                <div class="row">
+                    {% for image in article.images.all %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="{% url 'get_article_image' image.id %}" 
+                                 class="card-img-top" 
+                                 alt="{{ image.file_name }}"
+                                 style="max-height: 200px; object-fit: cover;">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
             
             <!-- 文章操作按钮 -->
             <div class="mt-4">
