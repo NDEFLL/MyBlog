@@ -1,8 +1,18 @@
+from django.core.exceptions import ValidationError
+from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.urls import reverse
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+import base64
+import os
+import uuid
+
 from .models import Post, Profile, ExternalLink, Article
 from .forms import ArticleForm
+
 
 def is_admin(user):
     return user.is_superuser
@@ -35,43 +45,36 @@ def article_detail(request, pk):
     return render(request, 'blog/article_detail.html', {'article': article})
 
 @login_required
-# 需要用户登录并且是管理员才能访问
-@user_passes_test(is_admin)
 def article_create(request):
-    # 如果请求方法是 POST，说明用户提交了创建文章的表单，验证表单数据的有效性
-    # 如果有效则保存文章，并将文章的作者设置为当前登录用户，最后跳转到文章详情页
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            article = form.save(commit=False)
-            article.author = request.user
-            article.content = request.POST.get('content')
-            article.save()
+            article = form.save()
             messages.success(request, '文章发布成功！')
             return redirect('article_detail', pk=article.pk)
-    # 如果请求方法是 GET，显示一个空的文章表单。
     else:
         form = ArticleForm()
-    return render(request, 'blog/article_form.html', {'form': form})
+    return render(request, 'blog/article_form.html', {
+        'form': form,
+    })
 
 @login_required
 # 需要用户登录并且是管理员才能访问
 @user_passes_test(is_admin)
 def article_edit(request, pk):
-    # 根据文章的主键 pk 从数据库中获取对应的文章对象，如果文章不存在则返回 404 错误
     article = get_object_or_404(Article, pk=pk)
-    # 如果请求方法是 POST，说明用户提交了编辑文章的表单
-    # 验证表单数据的有效性，如果有效则更新文章信息，最后跳转到文章详情页
     if request.method == 'POST':
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
-            form.save()
+            article = form.save()
             messages.success(request, '文章更新成功！')
             return redirect('article_detail', pk=article.pk)
     else:
-        # 如果请求方法是 GET，显示一个已填充文章信息的表单。
         form = ArticleForm(instance=article)
-    return render(request, 'blog/article_form.html', {'form': form})
+    return render(request, 'blog/article_form.html', {
+        'form': form,
+        'article_id': article.id
+    })
 
 @login_required
 # 需要用户登录并且是管理员才能访问
@@ -83,3 +86,48 @@ def article_delete(request, pk):
     article.delete()
     messages.success(request, '文章删除成功！')
     return redirect('article_list')
+
+# 上传图片
+@login_required
+def upload_articleimage(request):
+    # 检查请求的方法是否为POST，并且请求中是否包含一个名为'image'的文件
+    if request.method == 'POST' and request.FILES.get('upload'):
+        try:
+            # 拆功能键图片记录（先不与文章关联）
+            image_file = request.FILES['upload']
+            # 验证文件大小（示例限制5MB）
+            if image_file.size > 5 * 1024 * 1024:
+                return JsonResponse({'error': '文件大小不能超过5MB'}, status=400)
+            # # 保存到数据库中
+            # article_image = ArticleImage.objects.create(
+            #     image_data=image_file.read(),
+            #     content_type=image_file.content_type,
+            #     article_id=None    #临时标记
+            # )
+            encoded = base64.b64encode(image_file.read()).decode()
+            content_type = image_file.content_type
+            # 返回 CKEditor 需要的响应格式
+            return JsonResponse({
+                # 用于获取上传的图片数据
+                'url':f'data:{content_type};base64,{encoded}'
+            })
+        except Exception as e:
+            return JsonResponse(
+                {
+                    'uploaded': False,
+                    'error': {
+                        'message': f'上传失败: {str(e)}'
+                    }
+                },status=400
+            )
+    return JsonResponse({
+        'uploaded': False,
+        'error': {'message': '无效请求'}
+    },status=400)
+
+# def get_article_image(request, image_id):
+#     try:
+#         image = ArticleImage.objects.get(id=image_id)
+#         return HttpResponse(image.image, content_type=image.content_type)
+#     except ArticleImage.DoesNotExist:
+#         return HttpResponse(status=404)

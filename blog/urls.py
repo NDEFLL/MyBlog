@@ -14,5 +14,6 @@ urlpatterns = [
     path('articles/<int:pk>/delete/', views.article_delete, name='article_delete'),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('ckeditor5/upload/', upload_file, name='ckeditor_5_upload'),
+    path('upload_articleimage/',views.upload_articleimage,name='upload_articleimage'),
     path('',include('proj.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
