@@ -31,7 +31,7 @@
             <div class="music-player-container">
                 <div class="player-controls">
                     <div class="song-info">
-                        <h4 id="song-title">Shower</h4>
+                        <h4 id="song-title">虹桥</h4>
                         <p id="song-artist">Rapeter</p>
                     </div>
                     <div class="control-buttons">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <audio id="music" autoplay>
-                    <source src="{% static 'Shower.mp3' %}" type="audio/mpeg">
+                    <source src="{% static 'hq.mp3' %}" type="audio/mpeg">
             </audio>
             
             <ul class="social-icons">
@@ -112,10 +112,13 @@
                         <p>我的文章</p>
                     </div>
                 </a>
-                <div class="website-item">
-                    <i class="fas fa-flask"></i>
-                    <p>开发中...</p>
-                </div>
+                <a href="{% url 'message' %}">
+                    <div class="website-item">
+                        <i class="fas fa-flask"></i>
+                        <p>留言</p>
+                    </div>
+                </a>
+                
             </div>
         </div>
         
@@ -150,8 +153,10 @@
             const location = '101280101'; // 广州的城市代码（可在和风天气官网查询其他城市）
             const apiKey = 'cd810fb2a3ba4a438bdca6dc07d55584'; // 替换为你的实际API密钥
             
+            //https://devapi.qweather.com/v7/weather/now?location=${location}&key=${apiKey}
+            
             // 获取实时天气
-            fetch(`https://devapi.qweather.com/v7/weather/now?location=${location}&key=${apiKey}`)
+            fetch(`https://kq57rj62kg.re.qweatherapi.com/v7/weather/now?location=${location}&key=${apiKey}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.code === '200') {
@@ -163,7 +168,7 @@
                         weatherElement.textContent = `广东 ${weather} ${temp}℃`;
                         
                         // 可选：添加天气图标
-                        // weatherElement.innerHTML = `<i class="weather-icon ${getWeatherIconClass(weather)}"></i> 广东 ${weather} ${temp}℃`;
+                        //weatherElement.innerHTML = `<i class="weather-icon ${getWeatherIconClass(weather)}"></i> 广东 ${weather} ${temp}℃`;
                     } else {
                         weatherElement.textContent = '获取天气失败';
                     }

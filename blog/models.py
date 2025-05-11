@@ -46,6 +46,36 @@ class Article(models.Model):
         self.views += 1
         self.save(update_fields=['views'])
 
+class Message(models.Model):
+    CONTACT_CHOICES = [
+        ('email', '邮箱'),
+        ('qq', 'QQ'),
+        ('wechat', '微信'),
+        ('phone', '手机号码'),
+    ]
+
+    name = models.CharField(max_length=100, verbose_name='姓名')
+    contact_type = models.CharField(max_length=10, choices=CONTACT_CHOICES, verbose_name='联系方式类型')
+    contact_info = models.CharField(max_length=100, verbose_name='联系方式')
+    content = models.TextField(verbose_name='留言内容')
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='留言时间')
+    is_read = models.BooleanField(default=False, verbose_name='是否已读')
+
+    class Meta:
+        verbose_name = '留言'
+        verbose_name_plural = '留言'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+
+# class Image(models.Model):
+#     image_data = models.BinaryField() #存储图片的二进制数据
+#     uploaded_at = models.DateTimeField("上传时间",auto_now_add=True)    #图片上传时间（auto_now_add=True 在图片上传时自动设置当前时间）
+#     content_type = models.CharField("文件类型", max_length=100)  # 用于存储文件的MIME类型
+#     image_name = models.CharField()
+
 # 文章图片
 # class ArticleImage(models.Model):
 #     image_data = models.BinaryField() #存储图片的二进制数据

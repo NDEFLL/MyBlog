@@ -228,6 +228,12 @@
                     <span>发布文章</span>
                 </a>
             </li>
+            <li>
+                <a href="{% url 'message_list' %}" class="{% if request.path == '/message/list/' %}active{% endif %}">
+                    <i class="fa-solid fa-message"></i>
+                    <span>留言管理</span>
+                </a>
+            </li>
             {% endif %}
         </ul>
     </nav>

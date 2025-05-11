@@ -16,4 +16,7 @@ urlpatterns = [
     path('ckeditor5/upload/', upload_file, name='ckeditor_5_upload'),
     path('upload_articleimage/',views.upload_articleimage,name='upload_articleimage'),
     path('',include('proj.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('message/', views.message_view, name='message'),
+    path('message/list/', views.message_list, name='message_list'),
+    path('message/mark-read/<int:message_id>/', views.mark_message_read, name='mark_message_read'),
+]

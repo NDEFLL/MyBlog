@@ -10,8 +10,8 @@ import base64
 import os
 import uuid
 
-from .models import Post, Profile, ExternalLink, Article
-from .forms import ArticleForm
+from .models import Post, Profile, ExternalLink, Article, Message
+from .forms import ArticleForm, MessageForm
 
 
 def is_admin(user):
@@ -131,3 +131,35 @@ def upload_articleimage(request):
 #         return HttpResponse(image.image, content_type=image.content_type)
 #     except ArticleImage.DoesNotExist:
 #         return HttpResponse(status=404)
+
+def message_view(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '留言已提交，感谢您的反馈！')
+            return redirect('message')
+    else:
+        form = MessageForm()
+    return render(request, 'blog/message.html', {'form': form})
+
+@login_required
+def message_list(request):
+    if not request.user.is_staff:
+        messages.error(request, '您没有权限访问此页面')
+        return redirect('home')
+    
+    message_list = Message.objects.all()
+    return render(request, 'blog/message_list.html', {'message_list': message_list})
+
+@login_required
+def mark_message_read(request, message_id):
+    if not request.user.is_staff:
+        messages.error(request, '您没有权限执行此操作')
+        return redirect('home')
+    
+    message = get_object_or_404(Message, id=message_id)
+    message.is_read = True
+    message.save()
+    messages.success(request, '留言已标记为已读')
+    return redirect('message_list')
