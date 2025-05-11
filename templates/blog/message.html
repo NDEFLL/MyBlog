@@ -1,0 +1,133 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">给我留言</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="message-form">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-3">
+                            <label for="id_name">姓名/昵称</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="error text-danger">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>联系方式</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{ form.contact_type }}
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form.contact_info }}
+                                </div>
+                            </div>
+                            {% if form.contact_type.errors %}
+                                <div class="error text-danger">{{ form.contact_type.errors }}</div>
+                            {% endif %}
+                            {% if form.contact_info.errors %}
+                                <div class="error text-danger">{{ form.contact_info.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_content">留言内容</label>
+                            {{ form.content }}
+                            {% if form.content.errors %}
+                                <div class="error text-danger">{{ form.content.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-actions text-center">
+                            <button type="submit" class="btn btn-primary">提交留言</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    margin-top: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.card-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.btn-primary {
+    padding: 0.5rem 2rem;
+}
+
+.error {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+#contact-type {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+}
+
+#contact-type option {
+    padding: 0.5rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contactType = document.getElementById('contact-type');
+    const contactInfo = document.getElementById('id_contact_info');
+    
+    // 更新联系方式输入框的提示文本
+    function updatePlaceholder() {
+        const type = contactType.value;
+        switch(type) {
+            case 'email':
+                contactInfo.placeholder = '请输入您的邮箱地址';
+                break;
+            case 'qq':
+                contactInfo.placeholder = '请输入您的QQ号码';
+                break;
+            case 'wechat':
+                contactInfo.placeholder = '请输入您的微信号';
+                break;
+            case 'phone':
+                contactInfo.placeholder = '请输入您的手机号码';
+                break;
+        }
+    }
+    
+    // 监听联系方式类型的变化
+    contactType.addEventListener('change', updatePlaceholder);
+    
+    // 初始化提示文本
+    updatePlaceholder();
+});
+</script>
+{% endblock %} 

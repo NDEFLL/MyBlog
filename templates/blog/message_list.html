@@ -1,0 +1,92 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">留言列表</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>联系方式</th>
+                            <th>留言内容</th>
+                            <th>留言时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in message_list %}
+                        <tr class="{% if not message.is_read %}table-warning{% endif %}">
+                            <td>{{ message.name }}</td>
+                            <td>
+                                {% if message.contact_type == 'email' %}
+                                    <i class="fas fa-envelope"></i>
+                                {% elif message.contact_type == 'qq' %}
+                                    <i class="fab fa-qq"></i>
+                                {% elif message.contact_type == 'wechat' %}
+                                    <i class="fab fa-weixin"></i>
+                                {% elif message.contact_type == 'phone' %}
+                                    <i class="fas fa-phone"></i>
+                                {% endif %}
+                                {{ message.contact_info }}
+                            </td>
+                            <td>{{ message.content|truncatechars:50 }}</td>
+                            <td>{{ message.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                {% if message.is_read %}
+                                    <span class="badge bg-success">已读</span>
+                                {% else %}
+                                    <span class="badge bg-warning">未读</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not message.is_read %}
+                                    <a href="{% url 'mark_message_read' message.id %}" class="btn btn-sm btn-primary">标记已读</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">暂无留言</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.table th {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    font-size: 0.875rem;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.fas, .fab {
+    margin-right: 5px;
+    color: #666;
+}
+</style>
+{% endblock %} 
