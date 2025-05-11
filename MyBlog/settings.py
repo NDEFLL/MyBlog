@@ -83,24 +83,14 @@ WSGI_APPLICATION = 'MyBlog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog',      # 数据库名称
-        'USER': 'ndefl',      # 用户名
-        'PASSWORD': 'Lxh20020907',  # 密码
-        'HOST': 'pgm-bp1ii8z103m058389o.pg.rds.aliyuncs.com',      # RDS终端节点
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME'),      # 数据库名称
+        'USER': os.getenv('DB_USER'),      # 用户名
+        'PASSWORD': os.getenv('DB_PASS'),  # 密码
+        'HOST': os.getenv('DB_HOST'),      # RDS终端节点
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'CONN_MAX_AGE': 60,  # 连接复用（秒）
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('DB_NAME'),      # 数据库名称
-#         'USER': os.getenv('DB_USER'),      # 用户名
-#         'PASSWORD': os.getenv('DB_PASS'),  # 密码
-#         'HOST': os.getenv('DB_HOST'),      # RDS终端节点
-#         'PORT': os.getenv('DB_PORT', '5432'),
-#         'CONN_MAX_AGE': 60,  # 连接复用（秒）
-#     }
-# }
 
 
 # Password validation
@@ -158,7 +148,7 @@ CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
             'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
-            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters',  # 添加这个关键插件
+            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
         ],
         'image': {
                 'toolbar': [
