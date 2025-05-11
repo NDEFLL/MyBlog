@@ -148,7 +148,7 @@ CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
             'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
-            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters',  # 添加这个关键插件
+            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
         ],
         'image': {
                 'toolbar': [
