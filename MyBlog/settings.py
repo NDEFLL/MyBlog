@@ -147,8 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', 'bulletedList','codeBlock',
-            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
+            'heading', '|', 'bold', 'italic', 'link', 'bulletedList','numberedList',
+            'codeBlock','blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
         ],
         'plugins': ['Emoji'],
         'emoji': {
