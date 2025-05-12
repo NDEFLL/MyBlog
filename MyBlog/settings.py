@@ -150,11 +150,6 @@ CKEDITOR_5_CONFIGS = {
             'heading', '|', 'bold', 'italic', 'link', 'bulletedList','numberedList',
             'codeBlock','blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
         ],
-        'plugins': ['Emoji'],
-        'emoji': {
-            'emojis': ['😊', '🎯', '🚀'],  # 自定义表情
-            'columns': 5
-        }
         'image': {
                 'toolbar': [
                     'imageTextAlternative',  # 图片描述文本
