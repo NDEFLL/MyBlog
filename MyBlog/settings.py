@@ -16,6 +16,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 50  # 50MB
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -28,7 +29,7 @@ SECRET_KEY = 'django-insecure-a726d^tv8b4qptsskmfg%b#sl2l*@dw36b+a%3p2n%!cy0bin2
 DEBUG = False
 
 # 允许 Vercel 的域名
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1','localhost','ndefl.top']    #记得把自定义域名添加进去
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1','localhost','ndefl.top','.onrender.com']    #记得把自定义域名添加进去
 
 
 # Application definition
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'MyBlog.urls'
@@ -147,8 +149,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
-            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
+            'heading', '|', 'bold', 'italic', 'link', 'bulletedList','numberedList',
+            'codeBlock','blockQuote', 'imageUpload', 'undo', 'redo','specialCharacters','emoji'  # 添加这个关键插件
         ],
         'image': {
                 'toolbar': [
