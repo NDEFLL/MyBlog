@@ -3,12 +3,13 @@
 
 
 {% block content %}
+    
 <!-- 文章详情页面容器 -->
 <div class="container mt-4">
     <div class="card">
         <div class="card-body">
             <!-- 文章标题 -->
-            <h1 class="card-title mb-4">{{ article.title }}</h1>
+            <h1 class="card-title mb-4" style="width: 90%;padding-left: 10%">{{ article.title }}</h1>
             
             <!-- 文章图片 -->
             {% if article.image %}
@@ -34,9 +35,11 @@
             </div>
             
             <!-- 文章内容 -->
-            <div class="article-content">
+            <div class="article-content" style="width: 90%;padding-left: 5%">
                 {{ article.content|safe |linebreaks }}
             </div>
+            <!-- 目录容器 -->
+            <div class="toc" id="toc"></div>
             
             <!-- 文章关联的图片 -->
             {% if article.images.all %}
@@ -71,4 +74,52 @@
         </div>
     </div>
 </div>
+    
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有标题元素
+            const headings = document.querySelectorAll('.content h1, .content h2, .content h3');
+            const tocContainer = document.getElementById('toc');
+            
+            if (headings.length > 0) {
+                let tocHTML = '<h4>目录</h4><ul>';
+                let currentLevel = 1;
+                
+                headings.forEach((heading, index) => {
+                    // 为标题添加ID（如果没有）
+                    if (!heading.id) {
+                        heading.id = 'heading-' + index;
+                    }
+                    
+                    // 确定标题级别
+                    const level = parseInt(heading.tagName.substring(1));
+                    
+                    // 调整列表层级
+                    if (level > currentLevel) {
+                        tocHTML += '<ul>';
+                    } else if (level < currentLevel) {
+                        tocHTML += '</ul></li>';
+                    } else if (index !== 0) {
+                        tocHTML += '</li>';
+                    }
+                    
+                    currentLevel = level;
+                    
+                    // 添加目录项
+                    tocHTML += `<li><a href="#${heading.id}">${heading.textContent}</a>`;
+                });
+                
+                // 关闭所有打开的标签
+                while (currentLevel > 1) {
+                    tocHTML += '</ul></li>';
+                    currentLevel--;
+                }
+                
+                tocHTML += '</ul>';
+                tocContainer.innerHTML = tocHTML;
+            } else {
+                tocContainer.style.display = 'none';
+            }
+        });
+</script>
 {% endblock %} 
